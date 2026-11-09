@@ -2,24 +2,21 @@
 python = "3.14"
 uv = "latest"
 
-[env]
-_.python.venv = { path = ".venv", create = true }
-
 [tasks.install]
 description = "Install docs dependencies"
-run = "uv pip install -q -r requirements.txt"
+run = "uv sync --quiet"
 
 [tasks.start]
 description = "Serve docs with live reload"
 depends = ["install"]
-run = "sphinx-autobuild docs build/html --open-browser"
+run = "uv run sphinx-autobuild docs build/html --open-browser"
 
 [tasks.build]
 description = "Build HTML docs"
 depends = ["install"]
-run = "sphinx-build -W --keep-going -b html docs build/html"
+run = "uv run sphinx-build -W --keep-going -b html docs build/html"
 
 [tasks.pdf]
 description = "Build PDF docs (requires LaTeX)"
 depends = ["install"]
-run = "sphinx-build -M latexpdf docs build"
+run = "uv run sphinx-build -M latexpdf docs build"
